@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="image3.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script>
+var images=[
+    {
+        "title": "city",
+        "category": "city",
+        "date":'10/05/2019',
+        "src":'1.jpg'
+    },
+    {
+        "title": "cat",
+        "category": "animal",
+        "date":'09/05/2019',
+        "src":'2.jpg'
+    },
+    {
+        "title": "mountain",
+        "category": "nature",
+        "date":'08/05/2019',
+        "src":'3.jpg'
+    },
+    {
+        "title": "city1",
+        "category": "city",
+        "date":'07/05/2019',
+        "src":'4.jpg'
+    },
+    {
+        "title": "city2",
+        "category": "city",
+        "date":'06/05/2019',
+        "src":'5.jpg'
+    },
+    {
+        "title": "mountain1",
+        "category": "nature",
+        "date":'05/05/2019',
+        "src":'6.jpg'
+    },
+    {
+        "title": "mountain2",
+        "category": "nature",
+        "date":'04/05/2019',
+        "src":'7.jpg'
+    },
+    {
+        "title": "tree",
+        "category": "nature",
+        "date":'03/05/2019',
+        "src":'8.jpg'
+    },
+    {
+        "title": "see",
+        "category": "nature",
+        "date":'02/05/2019',
+        "src":'9.jpg'
+    }
+];
+var images1;
+var count = Object.keys(images).length;
+function sortByKey(array, prop) {
+    return array.sort(function(a, b) {
+        return (a[prop] > b[prop]) ? 1 : ((a[prop] < b[prop]) ? -1 : 0);
+    });
+}
+$(document).ready(function(){
+    console.log(images[1]);
+    console.log("inside");
+  $("select[name=\"dropdown\"]").change(function(){
+    var images2;
+    if(images1)
+    {
+        images2 = images1;
+    }
+    else
+    {
+        images2 = images;
+    }
+    console.log(images[2]);
+    if ($(this).val() == "1"){
+        var string='';
+        console.log(count);
+        images2 = sortByKey(images2, 'title');
+    }
+    else if ($(this).val() == "2"){
+        var string='';
+        console.log(count);
+        images2 = sortByKey(images2, 'category');
+    }
+    else if ($(this).val() == "3"){
+        var string='';
+        console.log(count);
+        images2 = sortByKey(images2, 'date');
+        console.log(images2);
+    }   
+    console.log(images);
+    var start = 0;
+    count = Object.keys(images2).length;
+    string = string + `<div class="container">`;
+    for(var i=0;i<count;i++)
+    {
+            if(i%3==0)
+            {
+                string = string + `<div class="row">
+                    <div class="column">
+                            <img src="`+images2[i].src+`" style="width:100%" onclick="openModal();currentSlide(1)" class="hover-shadow cursor">
+                    </div>`
+            }
+            else if(i==count-1 || i%3==2)
+            {
+                string = string + `
+                    <div class="column">
+                            <img src="`+images2[i].src+`" style="width:100%" onclick="openModal();currentSlide(1)" class="hover-shadow cursor">
+                    </div>
+                </div>`;
+            }
+            else{
+                string = string + `<div class="column">
+                            <img src="`+images2[i].src+`" style="width:100%" onclick="openModal();currentSlide(1)" class="hover-shadow cursor">
+                    </div>`;
+            }
+    }
+    string = string +  `</div>`;
+    console.log("string : ",string);
+    $("div.container").replaceWith(string);  
+  });
+
+
+  $("select[name=\"dropdown1\"]").change(function(){
+    var string1 = '';
+    if ($(this).val() == "1"){
+        console.log("inside 1",images);
+        //var string1='';
+        console.log(count);
+        //images = images.filter()(images, 'title');
+        images1 = images.filter(function(p){return p.category == "nature";});
+    }
+    else if ($(this).val() == "2"){
+        console.log("inside 2");
+        //var string='';
+        console.log(count);
+        images1 = images.filter(function(p){return p.category == "city";});
+        console.log(images);
+    }
+    else if ($(this).val() == "3"){
+        //var string='';
+        console.log(count);
+        // images.sort(function(a,b){
+        //     var x=a["title"]; 
+        //     var y=b["title"]; 
+        //     return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+        // });
+        images1 = images.filter(function(p){return p.category == "animal";});
+    }
+    count = Object.keys(images1).length;
+    string1 = string1 + `<div class="container">`;
+    for(var i=0;i<count;i++)
+    {
+            if(i%3==0)
+            {
+                string1 = string1 + `<div class="row">
+                    <div class="column">
+                            <img src="`+images1[i].src+`" style="width:100%" onclick="openModal();currentSlide(1)" class="hover-shadow cursor">
+                    </div>`
+            }
+            else if(i==count-1 || i%3==2)
+            {
+                string1 = string1 + `
+                    <div class="column">
+                            <img src="`+images1[i].src+`" style="width:100%" onclick="openModal();currentSlide(1)" class="hover-shadow cursor">
+                    </div>
+                </div>`;
+            }
+            else{
+                string1 = string1 + `<div class="column">
+                            <img src="`+images1[i].src+`" style="width:100%" onclick="openModal();currentSlide(1)" class="hover-shadow cursor">
+                    </div>`;
+            }
+    }
+    string1 = string1 +  `</div>`;
+    $("div.container").replaceWith(string1);
+  });
+});
+</script>
+</head>
+<body>
+
+<h2 style="text-align:center">Lightbox</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="column">
+            <img src="1.jpg" style="width:100%" onclick="openModal();currentSlide(1)" class="hover-shadow cursor">
+        </div>
+        <div class="column">
+            <img src="2.jpg" style="width:100%" onclick="openModal();currentSlide(2)" class="hover-shadow cursor">
+        </div>
+        <div class="column">
+            <img src="3.jpg" style="width:100%" onclick="openModal();currentSlide(3)" class="hover-shadow cursor">
+        </div>
+    </div>
+    <div class="row">
+            <div class="column">
+                <img src="4.jpg" style="width:100%" onclick="openModal();currentSlide(1)" class="hover-shadow cursor">
+            </div>
+            <div class="column">
+                <img src="5.jpg" style="width:100%" onclick="openModal();currentSlide(2)" class="hover-shadow cursor">
+            </div>
+            <div class="column">
+                <img src="6.jpg" style="width:100%" onclick="openModal();currentSlide(3)" class="hover-shadow cursor">
+            </div>
+    </div>
+    <div class="row">
+            <div class="column">
+                <img src="7.jpg" style="width:100%" onclick="openModal();currentSlide(1)" class="hover-shadow cursor">
+            </div>
+            <div class="column">
+                <img src="8.jpg" style="width:100%" onclick="openModal();currentSlide(2)" class="hover-shadow cursor">
+            </div>
+            <div class="column">
+                <img src="9.jpg" style="width:100%" onclick="openModal();currentSlide(3)" class="hover-shadow cursor">
+            </div>
+    </div>
+</div>
+<div id="myModal" class="modal">
+  <span class="close cursor" onclick="closeModal()">&times;</span>
+  <div class="modal-content">
+
+    <div class="mySlides">
+      <div class="numbertext">1 / 4</div>
+      <img src="1.jpg" style="width:100%">
+    </div>
+
+    <div class="mySlides">
+      <div class="numbertext">2 / 4</div>
+      <img src="2.jpg" style="width:100%">
+    </div>
+
+    <div class="mySlides">
+      <div class="numbertext">3 / 4</div>
+      <img src="3.jpg" style="width:100%">
+    </div>
+    
+    
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+    <div class="caption-container">
+      <p id="caption"></p>
+    </div>
+
+
+    <div class="column">
+      <img class="demo cursor" src="1.jpg" style="width:100%" onclick="currentSlide(1)" alt="Nature and sunrise">
+    </div>
+    <div class="column">
+      <img class="demo cursor" src="2.jpg" style="width:100%" onclick="currentSlide(2)" alt="Snow">
+    </div>
+    <div class="column">
+      <img class="demo cursor" src="3.jpg" style="width:100%" onclick="currentSlide(3)" alt="Mountains and fjords">
+    </div>
+  </div>
+</div>
+
+<select name="dropdown">
+        <option value="1">title</option>
+        <option value="2">category</option>
+        <option value="3">date</option>
+</select>
+<select name="dropdown1">
+        <option value="1">nature</option>
+        <option value="2">city</option>
+        <option value="3">animal</option>
+</select>
+<script src="gallery.js"></script>    
+</body>
+</html>
